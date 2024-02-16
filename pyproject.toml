@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "hw-29"
+version = "0.1.0"
+description = ""
+authors = ["Giriraj das"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.0.2"
+psycopg2-binary = "^2.9.9"
+djangorestframework = "^3.14.0"
+pillow = "^10.2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

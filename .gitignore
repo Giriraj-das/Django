@@ -1,0 +1,7 @@
+venv/
+.venv/
+.idea/
+__pycache__/
+.git/
+.DS_Store
+hw-27.txt
