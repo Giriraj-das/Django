@@ -32,7 +32,7 @@ class User(models.Model):
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
-        ordering = ['username']
+        # ordering = ['username']
 
     def __str__(self):
         return self.username
@@ -64,3 +64,11 @@ class Ad(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def username(self):
+        return self.author.username if self.author else None
+
+    @property
+    def category_name(self):
+        return self.category.name if self.category else None
