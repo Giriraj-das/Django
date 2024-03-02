@@ -1,6 +1,7 @@
 from django.urls import path
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from ads.views import ads, categories, users
+from ads.views import ads, categories, users, selections
 
 urlpatterns = [
     path('ad/', ads.AdListView.as_view()),
@@ -21,4 +22,13 @@ urlpatterns = [
     path('user/create/', users.UserCreateView.as_view()),
     path('user/<int:pk>/update/', users.UserUpdateView.as_view()),
     path('user/<int:pk>/delete/', users.UserDeleteView.as_view()),
+
+    path('selection/', selections.SelectionListView.as_view()),
+    path('selection/<int:pk>/', selections.SelectionDetailView.as_view()),
+    path('selection/create/', selections.SelectionCreateView.as_view()),
+    path('selection/<int:pk>/update/', selections.SelectionUpdateView.as_view()),
+    path('selection/<int:pk>/delete/', selections.SelectionDeleteView.as_view()),
+
+    path('user/token/', TokenObtainPairView.as_view()),
+    path('user/token/refresh/', TokenRefreshView.as_view()),
 ]

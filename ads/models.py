@@ -1,4 +1,6 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class Location(models.Model):
@@ -14,18 +16,18 @@ class Location(models.Model):
         return self.name
 
 
-class User(models.Model):
+class User(AbstractUser):
 
-    class Role(models.TextChoices):
+    class Roles(models.TextChoices):
         ADMIN = 'admin', 'Администратор'
         MODERATOR = 'moderator', 'Модератор'
         MEMBER = 'member', 'Пользователь'
 
-    first_name = models.CharField(max_length=50, null=True, blank=True)
-    last_name = models.CharField(max_length=50, null=True, blank=True)
-    username = models.CharField(max_length=20, unique=True)
-    password = models.CharField(max_length=50)
-    role = models.CharField(max_length=9, choices=Role.choices, default=Role.MEMBER)
+    # username
+    # password
+    first_name = models.CharField(_("first name"), max_length=150, null=True, blank=True)
+    last_name = models.CharField(_("last name"), max_length=150, null=True, blank=True)
+    role = models.CharField(max_length=9, choices=Roles.choices, default=Roles.MEMBER)
     age = models.PositiveSmallIntegerField()
     locations = models.ManyToManyField(Location)
 
@@ -72,3 +74,20 @@ class Ad(models.Model):
     @property
     def category_name(self):
         return self.category.name if self.category else None
+
+
+class Selection(models.Model):
+    name = models.CharField(max_length=50)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    items = models.ManyToManyField(Ad)
+
+    class Meta:
+        verbose_name = "Подборка"
+        verbose_name_plural = "Подборки"
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def username(self):
+        return self.owner.username if self.owner else None
